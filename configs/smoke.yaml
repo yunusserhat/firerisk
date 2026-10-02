@@ -1,0 +1,13 @@
+extends: base.yaml
+experiment:
+  name: siglip2-smoke
+training:
+  epochs: 1
+  batch_size: 4
+  eval_batch_size: 8
+  accumulation_steps: 2
+  workers: 2
+  max_train_batches: 4
+  max_eval_batches: 3
+evaluation:
+  bootstrap_samples: 20

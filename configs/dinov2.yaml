@@ -1,0 +1,7 @@
+extends: base.yaml
+experiment:
+  name: dinov2-base-full
+model:
+  name: vit_base_patch14_dinov2.lvd142m
+  revision: 4685c99dabffe5affac90bd99dbffd25801ae58d
+  image_size: 224

@@ -1,0 +1,197 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=25mm]{geometry}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage[hidelinks]{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\setlength{\emergencystretch}{2em}
+\newcommand{\paperauthors}{Authors to be confirmed}
+\newcommand{\paperrepository}{\href{https://github.com/yunusserhat/firerisk}{github.com/yunusserhat/firerisk}}
+\hypersetup{pdftitle={SigLIP2 for aerial fire risk classification},pdfauthor={\paperauthors}}
+\title{SigLIP2 for aerial fire risk classification}
+\author{\paperauthors}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We examine the transfer of a pretrained SigLIP2 image encoder to seven class
+fire risk classification from aerial imagery. We introduce a reproducible
+partition of the public FireRisk training mirror and an implementation that
+records data provenance, preprocessing and model selection. Two initial runs
+compare a frozen encoder probe with full model adaptation. On the validation
+partition, full adaptation reaches 63.05\% accuracy and 58.94\% macro F1,
+compared with 55.95\% and 50.19\% for the probe. Both runs use one training
+seed and select their checkpoint on the same validation partition. These
+development results support further evaluation of SigLIP2 but do not establish
+performance on an independent test set or unseen regions. The accompanying
+code provides a common framework for repeated experiments and comparisons
+with additional visual encoders.
+\end{abstract}
+
+\section{Introduction}
+
+Aerial images describe vegetation, buildings and surface cover that may help
+distinguish wildfire hazard categories. FireRisk links such imagery to labels
+derived from the Wildfire Hazard Potential map~\citep{shen2023firerisk}. The
+task is to recover a hazard category assigned to an image tile. It does not
+directly measure the probability of a future fire at that location.
+
+SigLIP2 learns visual representations using image and text supervision together
+with additional representation learning objectives~\citep{tschannen2025siglip2}.
+This motivates an empirical question about whether its image encoder can
+adapt to the different visual content of aerial imagery. We study a small
+initial comparison and release its protocol and implementation for further
+experiments.
+
+\section{Data and protocol}
+
+The original FireRisk study describes 91,872 images, with 70,331 training
+examples and a separate validation partition~\citep{shen2023firerisk}. Its RGB
+imagery was obtained from the National Agriculture Imagery Program during
+2019 and 2020 and cropped to $320\times320$ pixels. Labels come from the
+2020 Wildfire Hazard Potential map. We use the
+\href{https://huggingface.co/datasets/blanchon/FireRisk}{\texttt{blanchon/FireRisk}}
+mirror, which exposes only the 70,331 training examples. The mirror therefore
+does not provide the published evaluation partition.
+
+We create a new split with 49,231 training images, 10,552 validation images
+and 10,548 reserved test images. Allocation is stratified by class, using
+split seed 2026. The seven categories are very low, low, moderate, high, very
+high, nonburnable and water. The split preserves the class imbalance. For
+example, the validation partition contains 3,264 very low examples and 490
+very high examples.
+
+Before allocation, the preparation code hashes decoded RGB pixels and image
+dimensions using SHA256 after correcting image orientation. It groups exact
+duplicates and rejects conflicting labels within a group. The audit found
+70,331 unique pixel groups and no repeated images in this revision. This
+check concerns exact identity. It cannot exclude overlapping tiles or visual
+similarity between nearby locations. The mirror contains image and label
+fields without coordinates or acquisition dates, so this experiment cannot
+establish geographic or temporal independence.
+
+The data revision, model revision and split hash are recorded with each run.
+Validation macro F1 selects the checkpoint. The reserved test partition has
+not been evaluated in this study. As a result, our scores are development
+measurements under a new protocol and cannot be compared directly with the
+original FireRisk benchmark.
+
+\section{Model and training}
+
+We use the SigLIP2 base image encoder with $16\times16$ patches at
+$224\times224$ input resolution, distributed through
+\href{https://huggingface.co/timm/vit_base_patch16_siglip_224.v2_webli}{timm}.
+The pretrained attention pooling is retained. A trainable LayerNorm and a
+seven output linear layer operate on its 768 dimensional representation.
+The resulting classifier has 92,891,143 parameters. In the frozen encoder
+probe, only the head changes, leaving 6,919 trainable parameters. The encoder
+remains in evaluation mode during training. Full adaptation updates all
+parameters and uses head dropout with probability 0.1.
+
+Training uses random crops covering 80\% to 100\% of the image area, with
+aspect ratios from 0.9 to 1.1. Horizontal and vertical flips have probability
+0.5, and rotations use multiples of 90 degrees. Evaluation uses deterministic
+bicubic resizing and the pretrained center crop policy with crop proportion
+0.9. Each RGB channel is normalized with mean 0.5 and standard deviation 0.5.
+
+Both runs use AdamW with weight decay 0.05, label smoothing 0.05 and gradient
+clipping at norm 1. Learning rates follow a cosine schedule after warmup over
+10\% of the configured optimization steps. The probe uses a head learning
+rate of $10^{-3}$ and at most 15 epochs. Full adaptation uses $10^{-5}$ for
+the encoder and $3\times10^{-4}$ for the head, with at most 30 epochs.
+No class weighting or mixup is applied. The effective batch size is 64 in
+both cases. Full adaptation accumulates gradients over two batches of 32
+images and uses gradient checkpointing. Computation uses bfloat16 on one
+NVIDIA RTX 5090 GPU. Training seed 42 is shared by the two runs.
+
+Early stopping follows seven epochs without a validation macro F1 improvement
+greater than 0.0001. Both runs stop after 14 epochs and select epoch 7. The
+different learning rates, dropout and schedule lengths make this a comparison
+of two initial recipes. They prevent attribution of the observed difference
+to encoder adaptation alone.
+
+\section{Preliminary results}
+
+Table~\ref{tab:results} reports uncalibrated predictions from the selected
+checkpoints. Full adaptation improves validation accuracy by 7.10 percentage
+points and macro F1 by 8.75 percentage points relative to the probe. Macro F1
+assigns equal weight to the seven class F1 scores, making the minority classes
+visible alongside accuracy.
+
+\begin{table}[!htb]
+\centering
+\small
+\refstepcounter{table}\label{tab:results}
+\begin{tabular}{lrrrrr}
+\toprule
+Recipe & Trainable & Accuracy & Macro F1 & Time & Memory \\
+       & parameters & (\%) & (\%) & (min) & (GiB) \\
+\midrule
+Frozen encoder probe & 6,919 & 55.95 & 50.19 & 12.1 & 0.74 \\
+Full adaptation & 92,891,143 & 63.05 & 58.94 & 19.0 & 1.96 \\
+\bottomrule
+\end{tabular}
+\medskip
+\parbox{\textwidth}{Table~\thetable. Validation results from one training
+seed. Time covers the training
+loop, validation and checkpoint writing, excluding data preparation and
+model loading. Memory is peak PyTorch allocated GPU memory and does not
+represent total device or system memory.}
+\end{table}
+
+The strongest class F1 scores after full adaptation are water at 87.33\%
+and nonburnable at 85.12\%. Very high reaches 39.90\% F1 and 33.47\% recall,
+compared with 21.29\% F1 and 14.49\% recall for the probe. Although this
+minority category improves, its recall remains low. Full adaptation correctly
+identifies 164 of its 490 validation examples. This limits the usefulness of
+the current classifier when missing high hazard areas has a substantial cost.
+
+The runs executed concurrently on separate RTX 5090 GPUs. Their timings are
+contextual measurements and do not provide a controlled speed comparison.
+Times exclude environment installation, downloads and the initial pixel
+audit. No repeated training seeds are available, so the variation caused by
+training randomness remains unknown.
+
+\section{Reproducibility and limitations}
+
+The implementation keeps original Parquet shards and can build an indexed
+archive of unchanged image bytes for shuffled access. It avoids extracting
+each image to a separate file and records the selected artifact location.
+Each run saves its configuration, environment, preprocessing, data manifest,
+training history and selected weights. Immutable dataset and model revisions
+and the split hash are listed in the accompanying manuscript documentation.
+The initial run artifacts do not record a source commit and mark the
+development tree as modified.
+The repository also includes presets for LoRA adaptation, DINOv2, ConvNeXt
+and ResNet50. Those presets have no completed comparative results here.
+
+Several steps remain before a broader empirical claim is warranted. The
+recipes should receive declared validation search budgets and be repeated
+with independent training seeds. The fixed recipes can then be evaluated on
+the reserved test partition. A stronger study of transfer to new locations
+requires geographic metadata and a separate spatial holdout. Exact pixel
+hashes do not resolve geographic correlation or possible overlap with the
+pretraining data.
+
+Full SigLIP2 adaptation merits further study on this mirror. Errors within
+the risk categories, particularly very high hazard, remain a central concern.
+
+\paragraph{Code availability}
+\paperrepository. The code is distributed under the GNU General Public
+License version 3. Upstream imagery and pretrained weights retain their
+respective terms.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

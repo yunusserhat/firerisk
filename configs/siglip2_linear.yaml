@@ -1,0 +1,12 @@
+extends: base.yaml
+experiment:
+  name: siglip2-base-linear
+model:
+  mode: linear
+  dropout: 0.0
+  gradient_checkpointing: false
+training:
+  epochs: 15
+  batch_size: 64
+  accumulation_steps: 1
+  lr_head: 0.001

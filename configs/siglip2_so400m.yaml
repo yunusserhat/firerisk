@@ -1,0 +1,12 @@
+extends: base.yaml
+experiment:
+  name: siglip2-so400m-384-full
+model:
+  backend: siglip
+  name: google/siglip2-so400m-patch14-384
+  revision: e8e487298228002f3d8a82e0cd5c8ea9c567f57f
+  image_size: 384
+training:
+  batch_size: 8
+  eval_batch_size: 16
+  accumulation_steps: 8

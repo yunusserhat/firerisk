@@ -1,0 +1,11 @@
+extends: base.yaml
+experiment:
+  name: siglip2-base-384-full
+model:
+  name: vit_base_patch16_siglip_384.v2_webli
+  revision: 748b797aa2da9351ccdf9858fdb99c754da0dad0
+  image_size: 384
+training:
+  batch_size: 16
+  eval_batch_size: 32
+  accumulation_steps: 4

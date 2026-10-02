@@ -1,0 +1,10 @@
+extends: base.yaml
+experiment:
+  name: siglip2-base-lora
+model:
+  mode: lora
+  lora_rank: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+training:
+  lr_backbone: 0.0001

@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Cite this software and the FireRisk and backbone papers. Add release authors, version and DOI when publishing."
+title: "FireRisk Bench: Reproducible SigLIP2 Fine-Tuning and Vision Model Comparisons"
+authors:
+  - name: "FireRisk Bench contributors"
+type: software
+version: 0.1.0
+license: GPL-3.0-only
+repository-code: "https://github.com/yunusserhat/firerisk"
+date-released: '2026-10-02'

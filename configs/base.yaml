@@ -1,0 +1,42 @@
+experiment:
+  name: siglip2-base-full
+  seed: 42
+storage:
+  root: null  # FIRERISK_HOME or the user cache directory
+  min_free_gb: 5
+data:
+  repo_id: blanchon/FireRisk
+  revision: 234b2e7fe6be2da773472e83bd4d42cc9815a630
+  split_seed: 2026
+  val_fraction: 0.15
+  test_fraction: 0.15
+  deduplicate: true
+  audit_hash: pixels
+  access_mode: packed
+model:
+  backend: timm
+  name: vit_base_patch16_siglip_224.v2_webli
+  revision: 4c3661e5ac879a276ddc5ddc6d3f0ecc78fd5d82
+  image_size: 224
+  mode: full
+  gradient_checkpointing: true
+  dropout: 0.1
+training:
+  epochs: 30
+  batch_size: 32
+  eval_batch_size: 64
+  accumulation_steps: 2
+  workers: 4
+  precision: bf16
+  lr_backbone: 0.00001
+  lr_head: 0.0003
+  weight_decay: 0.05
+  warmup_fraction: 0.1
+  label_smoothing: 0.05
+  class_balance: none
+  patience: 7
+  save_last: true
+  deterministic: true
+evaluation:
+  calibrate: true
+  bootstrap_samples: 1000

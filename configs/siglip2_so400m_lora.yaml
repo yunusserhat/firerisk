@@ -1,0 +1,7 @@
+extends: siglip2_so400m.yaml
+experiment:
+  name: siglip2-so400m-384-lora
+model:
+  mode: lora
+training:
+  lr_backbone: 0.0001

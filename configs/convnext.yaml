@@ -1,0 +1,8 @@
+extends: base.yaml
+experiment:
+  name: convnext-tiny-full
+model:
+  name: convnext_tiny.fb_in22k_ft_in1k
+  revision: bc48a87f119bae1b06418f5340bfa97ef75d4609
+training:
+  lr_backbone: 0.00005

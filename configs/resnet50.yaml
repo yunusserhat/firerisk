@@ -1,0 +1,9 @@
+extends: base.yaml
+experiment:
+  name: resnet50-full
+model:
+  name: resnet50.a1_in1k
+  revision: 767268603ca0cb0bfe326fa87277f19c419566ef
+  gradient_checkpointing: false
+training:
+  lr_backbone: 0.0001
