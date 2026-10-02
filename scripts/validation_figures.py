@@ -1,4 +1,4 @@
-"""Reconstruct manuscript validation tables and figures from saved predictions.
+"""Reconstruct validation comparison tables and figures from saved predictions.
 
 This command reads completed run artifacts only. It neither trains a model nor
 loads a dataset or evaluates a checkpoint on the reserved test partition.

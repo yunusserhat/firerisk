@@ -58,7 +58,7 @@ firerisk predict --run-dir "$FIRERISK_HOME/runs/siglip2-base-full-seed42" \
 | Preset | Backbone | Adaptation | Image size |
 |---|---|---|---:|
 | `siglip2_base.yaml` | SigLIP2 ViT-B/16 | Full | 224 |
-| `siglip2_linear.yaml` | SigLIP2 ViT-B/16 | Frozen encoder and classifier | 224 |
+| `siglip2_linear.yaml` | SigLIP2 ViT-B/16 | Frozen encoder with trained classifier | 224 |
 | `siglip2_lora.yaml` | SigLIP2 ViT-B/16 | LoRA and classifier | 224 |
 | `siglip2_384.yaml` | SigLIP2 ViT-B/16 | Full | 384 |
 | `siglip2_so400m.yaml` | SigLIP2 So400m/14 | Full | 384 |
@@ -130,8 +130,6 @@ and pretrained weights for an intentionally bounded integration check.
 [Validation](docs/validation.md) records the completed implementation checks.
 A [model card template](docs/model_card_template.md) and
 [bibliographic references](docs/references.bib) support reporting.
-The short [paper draft](paper/main.pdf) has [LaTeX source](paper/main.tex)
-and [build instructions](paper/README.md).
 
 Code is licensed under the [GNU General Public License v3](LICENSE).
 Dataset and pretrained model terms remain separate. The FireRisk Hub card
