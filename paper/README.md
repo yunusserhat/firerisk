@@ -1,19 +1,23 @@
 # Manuscript
 
-[main.tex](main.tex) contains a short English manuscript. It describes the
+[main.tex](main.tex) contains a five-page English manuscript. It describes the
 completed frozen encoder probe and full SigLIP2 adaptation runs as preliminary
 validation experiments. No test scores or uncompleted model comparisons are
 reported. The prose avoids dashes, semicolons and colons. Bibliographic titles,
 URLs, mathematical signs and command syntax retain necessary characters.
 
-The compiled [PDF](main.pdf) has three pages. The
-[source archive](firerisk-arxiv-source.tar.gz) contains only `main.tex`,
-`references.bib` and the resolved `main.bbl`, ready for the author review.
+The compiled [PDF](main.pdf) has five pages including references, two result
+tables and one comparison figure. The
+[source archive](firerisk-arxiv-source.tar.gz) contains `main.tex`,
+`references.bib`, the resolved `main.bbl` and the required figure PDF.
 The accompanying code is at
 [yunusserhat/firerisk](https://github.com/yunusserhat/firerisk).
 
-The manuscript is a draft for author review. Confirm the author list and
-affiliations before submission. The paper has not been
+The author is Yunus Serhat Bıçakçı, Department of Artificial Intelligence and
+Machine Learning, Faculty of Applied Sciences, Marmara University, Istanbul,
+Türkiye. The byline links [ORCID 0000-0002-7288-9959](https://orcid.org/0000-0002-7288-9959).
+These details were supplied by the author. The manuscript is a draft for
+review before submission. The paper has not been
 submitted to arXiv. The code license does not change the upstream dataset or
 pretrained model terms.
 
@@ -28,8 +32,34 @@ latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 
 The output is `main.pdf`. `main.bbl` contains the resolved bibliography.
 For an arXiv source submission, include `main.tex`, `references.bib` and
-`main.bbl` in a source archive after the author review. The source does not
-require custom document classes, external figures or shell escape.
+`main.bbl` and `figures/validation-confusion-comparison.pdf` in a source archive
+after review. The source does not require custom document classes, remote
+resources or shell escape.
+
+## References and analysis
+
+The related work cites the author's ATTransUNet article for aerial segmentation
+and the street imagery geolocalization preprint for SigLIP retrieval.
+[citation_audit.md](citation_audit.md) records checked primary sources,
+publication status and bibliographic metadata. These are context citations,
+not evidence of FireRisk performance.
+
+[figures/analysis.json](figures/analysis.json) contains the confusion counts,
+class metrics and grouped error analysis reconstructed from both saved
+validation prediction files. The script verifies agreement with the original
+summaries, split identity and class supports before writing the artifacts.
+To regenerate them from completed runs, execute from the repository root.
+
+```bash
+python scripts/manuscript_results.py \
+  --frozen-run "$FIRERISK_HOME/runs/siglip2-base-linear-seed42" \
+  --full-run "$FIRERISK_HOME/runs/siglip2-base-full-seed42" \
+  --output paper/figures
+```
+
+This reads existing validation predictions and does not train or evaluate a
+checkpoint. Both recipes have the same 7,598 true hazard examples. Exact hazard
+category accuracy includes predictions of water or nonburnable as errors.
 
 ## Provenance
 

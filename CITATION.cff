@@ -1,8 +1,11 @@
 cff-version: 1.2.0
-message: "Cite this software and the FireRisk and backbone papers. Add release authors, version and DOI when publishing."
+message: "Cite this software and the FireRisk and backbone papers when using this benchmark."
 title: "FireRisk Bench: Reproducible SigLIP2 Fine-Tuning and Vision Model Comparisons"
 authors:
-  - name: "FireRisk Bench contributors"
+  - family-names: "Bıçakçı"
+    given-names: "Yunus Serhat"
+    affiliation: "Department of Artificial Intelligence and Machine Learning, Faculty of Applied Sciences, Marmara University, Istanbul, Türkiye"
+    orcid: "https://orcid.org/0000-0002-7288-9959"
 type: software
 version: 0.1.0
 license: GPL-3.0-only

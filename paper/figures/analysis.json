@@ -1,0 +1,559 @@
+{
+  "schema_version": 1,
+  "partition": "validation",
+  "n_examples": 10552,
+  "split_hash": "0ab5619091f80f73f8229634a38194ad31eeddf9dfe70978d1b664fe8fb598cd",
+  "protocol_hash": "80a789b6b355c19780466eabf280e65534f86d030a21758f2505e1d31aa65251",
+  "class_order": [
+    "very_low",
+    "low",
+    "moderate",
+    "high",
+    "very_high",
+    "non-burnable",
+    "water"
+  ],
+  "interpretation": "Single training seed. Checkpoints selected on this validation partition. Not independent test results or a controlled adaptation ablation.",
+  "runs": {
+    "Frozen encoder": {
+      "seed": 42,
+      "best_epoch": 7,
+      "model_revision": "4c3661e5ac879a276ddc5ddc6d3f0ecc78fd5d82",
+      "trainable_parameters": 6919,
+      "metrics": {
+        "accuracy": 0.5595147839272175,
+        "balanced_accuracy": 0.49892772473810815,
+        "macro_f1": 0.5018969225923836,
+        "weighted_f1": 0.550455311916676
+      },
+      "per_class": [
+        {
+          "class": "very_low",
+          "support": 3264,
+          "precision": 0.6222791293213829,
+          "recall": 0.5955882352941176,
+          "f1": 0.6086412022542267
+        },
+        {
+          "class": "low",
+          "support": 1606,
+          "precision": 0.34004602991944766,
+          "recall": 0.3679950186799502,
+          "f1": 0.3534688995215311
+        },
+        {
+          "class": "moderate",
+          "support": 1293,
+          "precision": 0.33975659229208927,
+          "recall": 0.2590873936581593,
+          "f1": 0.2939885914874945
+        },
+        {
+          "class": "high",
+          "support": 945,
+          "precision": 0.3548387096774194,
+          "recall": 0.4656084656084656,
+          "f1": 0.402745995423341
+        },
+        {
+          "class": "very_high",
+          "support": 490,
+          "precision": 0.4011299435028249,
+          "recall": 0.14489795918367346,
+          "f1": 0.2128935532233883
+        },
+        {
+          "class": "non-burnable",
+          "support": 2694,
+          "precision": 0.7592653328960315,
+          "recall": 0.8593170007423905,
+          "f1": 0.8061988507748564
+        },
+        {
+          "class": "water",
+          "support": 260,
+          "precision": 0.8739495798319328,
+          "recall": 0.8,
+          "f1": 0.8353413654618475
+        }
+      ],
+      "confusion_counts": [
+        [
+          1944,
+          566,
+          138,
+          99,
+          13,
+          492,
+          12
+        ],
+        [
+          521,
+          591,
+          206,
+          160,
+          9,
+          113,
+          6
+        ],
+        [
+          261,
+          278,
+          335,
+          316,
+          32,
+          67,
+          4
+        ],
+        [
+          96,
+          139,
+          193,
+          440,
+          48,
+          27,
+          2
+        ],
+        [
+          25,
+          93,
+          90,
+          202,
+          71,
+          8,
+          1
+        ],
+        [
+          261,
+          64,
+          24,
+          21,
+          4,
+          2315,
+          5
+        ],
+        [
+          16,
+          7,
+          0,
+          2,
+          0,
+          27,
+          208
+        ]
+      ],
+      "confusion_fraction_of_true_class": [
+        [
+          0.5955882352941176,
+          0.17340686274509803,
+          0.042279411764705885,
+          0.030330882352941176,
+          0.003982843137254902,
+          0.15073529411764705,
+          0.003676470588235294
+        ],
+        [
+          0.3244084682440847,
+          0.3679950186799502,
+          0.12826899128268993,
+          0.099626400996264,
+          0.00560398505603985,
+          0.07036114570361146,
+          0.0037359900373599006
+        ],
+        [
+          0.20185614849187936,
+          0.21500386697602475,
+          0.2590873936581593,
+          0.24439288476411447,
+          0.02474864655839134,
+          0.051817478731631866,
+          0.0030935808197989174
+        ],
+        [
+          0.10158730158730159,
+          0.14708994708994708,
+          0.20423280423280424,
+          0.4656084656084656,
+          0.050793650793650794,
+          0.02857142857142857,
+          0.0021164021164021165
+        ],
+        [
+          0.05102040816326531,
+          0.18979591836734694,
+          0.1836734693877551,
+          0.4122448979591837,
+          0.14489795918367346,
+          0.0163265306122449,
+          0.0020408163265306124
+        ],
+        [
+          0.09688195991091314,
+          0.023756495916852263,
+          0.008908685968819599,
+          0.0077951002227171495,
+          0.0014847809948032665,
+          0.8593170007423905,
+          0.001855976243504083
+        ],
+        [
+          0.06153846153846154,
+          0.026923076923076925,
+          0.0,
+          0.007692307692307693,
+          0.0,
+          0.10384615384615385,
+          0.8
+        ]
+      ],
+      "group_analysis": {
+        "risk_targets": 7598,
+        "exact_risk_label_correct": 3381,
+        "exact_risk_label_accuracy": 0.4449855225059226,
+        "risk_targets_predicted_outside_risk_classes": 732,
+        "risk_targets_predicted_outside_risk_classes_rate": 0.0963411424058963,
+        "risk_targets_underestimated_within_order": 1898,
+        "risk_targets_at_least_two_levels_underestimated_within_order": 704,
+        "within_one_level_correct_over_all_risk_targets": 5711,
+        "within_one_level_accuracy_over_all_risk_targets": 0.7516451697815214,
+        "nonburnable_and_water_targets": 2954,
+        "exact_nonburnable_or_water_label_correct": 2523,
+        "exact_nonburnable_or_water_label_accuracy": 0.8540961408259986,
+        "denominator_note": "All risk rates use every true risk target, including predictions of water or nonburnable. Those predictions have no ordinal rank and are separately counted as outside the risk classes."
+      },
+      "largest_off_diagonal_counts": [
+        {
+          "true": "very_low",
+          "predicted": "low",
+          "count": 566,
+          "fraction_of_true_class": 0.17340686274509803
+        },
+        {
+          "true": "low",
+          "predicted": "very_low",
+          "count": 521,
+          "fraction_of_true_class": 0.3244084682440847
+        },
+        {
+          "true": "very_low",
+          "predicted": "non-burnable",
+          "count": 492,
+          "fraction_of_true_class": 0.15073529411764705
+        },
+        {
+          "true": "moderate",
+          "predicted": "high",
+          "count": 316,
+          "fraction_of_true_class": 0.24439288476411447
+        },
+        {
+          "true": "moderate",
+          "predicted": "low",
+          "count": 278,
+          "fraction_of_true_class": 0.21500386697602475
+        },
+        {
+          "true": "moderate",
+          "predicted": "very_low",
+          "count": 261,
+          "fraction_of_true_class": 0.20185614849187936
+        },
+        {
+          "true": "non-burnable",
+          "predicted": "very_low",
+          "count": 261,
+          "fraction_of_true_class": 0.09688195991091314
+        },
+        {
+          "true": "low",
+          "predicted": "moderate",
+          "count": 206,
+          "fraction_of_true_class": 0.12826899128268993
+        },
+        {
+          "true": "very_high",
+          "predicted": "high",
+          "count": 202,
+          "fraction_of_true_class": 0.4122448979591837
+        },
+        {
+          "true": "high",
+          "predicted": "moderate",
+          "count": 193,
+          "fraction_of_true_class": 0.20423280423280424
+        }
+      ]
+    },
+    "Full adaptation": {
+      "seed": 42,
+      "best_epoch": 7,
+      "model_revision": "4c3661e5ac879a276ddc5ddc6d3f0ecc78fd5d82",
+      "trainable_parameters": 92891143,
+      "metrics": {
+        "accuracy": 0.6304965883244883,
+        "balanced_accuracy": 0.5811388502466516,
+        "macro_f1": 0.5893537355119126,
+        "weighted_f1": 0.6302334534422683
+      },
+      "per_class": [
+        {
+          "class": "very_low",
+          "support": 3264,
+          "precision": 0.7080843032400126,
+          "recall": 0.6896446078431373,
+          "f1": 0.6987428216669254
+        },
+        {
+          "class": "low",
+          "support": 1606,
+          "precision": 0.39087947882736157,
+          "recall": 0.44831880448318806,
+          "f1": 0.4176334106728539
+        },
+        {
+          "class": "moderate",
+          "support": 1293,
+          "precision": 0.4206041828040279,
+          "recall": 0.419953596287703,
+          "f1": 0.42027863777089786
+        },
+        {
+          "class": "high",
+          "support": 945,
+          "precision": 0.48081264108352145,
+          "recall": 0.4507936507936508,
+          "f1": 0.4653194975423266
+        },
+        {
+          "class": "very_high",
+          "support": 490,
+          "precision": 0.4939759036144578,
+          "recall": 0.3346938775510204,
+          "f1": 0.3990267639902677
+        },
+        {
+          "class": "non-burnable",
+          "support": 2694,
+          "precision": 0.8396533044420368,
+          "recall": 0.8630289532293987,
+          "f1": 0.8511806699615595
+        },
+        {
+          "class": "water",
+          "support": 260,
+          "precision": 0.8853754940711462,
+          "recall": 0.8615384615384616,
+          "f1": 0.8732943469785575
+        }
+      ],
+      "confusion_counts": [
+        [
+          2251,
+          557,
+          97,
+          42,
+          7,
+          302,
+          8
+        ],
+        [
+          477,
+          720,
+          249,
+          74,
+          12,
+          69,
+          5
+        ],
+        [
+          160,
+          298,
+          543,
+          194,
+          52,
+          38,
+          8
+        ],
+        [
+          37,
+          108,
+          254,
+          426,
+          96,
+          23,
+          1
+        ],
+        [
+          13,
+          58,
+          110,
+          140,
+          164,
+          3,
+          2
+        ],
+        [
+          227,
+          93,
+          35,
+          8,
+          1,
+          2325,
+          5
+        ],
+        [
+          14,
+          8,
+          3,
+          2,
+          0,
+          9,
+          224
+        ]
+      ],
+      "confusion_fraction_of_true_class": [
+        [
+          0.6896446078431373,
+          0.17064950980392157,
+          0.02971813725490196,
+          0.012867647058823529,
+          0.002144607843137255,
+          0.09252450980392157,
+          0.0024509803921568627
+        ],
+        [
+          0.2970112079701121,
+          0.44831880448318806,
+          0.15504358655043587,
+          0.0460772104607721,
+          0.007471980074719801,
+          0.04296388542963885,
+          0.00311332503113325
+        ],
+        [
+          0.12374323279195669,
+          0.23047177107501934,
+          0.419953596287703,
+          0.1500386697602475,
+          0.04021655065738593,
+          0.029389017788089715,
+          0.006187161639597835
+        ],
+        [
+          0.039153439153439155,
+          0.11428571428571428,
+          0.2687830687830688,
+          0.4507936507936508,
+          0.10158730158730159,
+          0.02433862433862434,
+          0.0010582010582010583
+        ],
+        [
+          0.026530612244897958,
+          0.11836734693877551,
+          0.22448979591836735,
+          0.2857142857142857,
+          0.3346938775510204,
+          0.006122448979591836,
+          0.004081632653061225
+        ],
+        [
+          0.08426132145508537,
+          0.034521158129175944,
+          0.012991833704528583,
+          0.002969561989606533,
+          0.0003711952487008166,
+          0.8630289532293987,
+          0.001855976243504083
+        ],
+        [
+          0.05384615384615385,
+          0.03076923076923077,
+          0.011538461538461539,
+          0.007692307692307693,
+          0.0,
+          0.03461538461538462,
+          0.8615384615384616
+        ]
+      ],
+      "group_analysis": {
+        "risk_targets": 7598,
+        "exact_risk_label_correct": 4104,
+        "exact_risk_label_accuracy": 0.5401421426691234,
+        "risk_targets_predicted_outside_risk_classes": 459,
+        "risk_targets_predicted_outside_risk_classes_rate": 0.060410634377467756,
+        "risk_targets_underestimated_within_order": 1655,
+        "risk_targets_at_least_two_levels_underestimated_within_order": 486,
+        "within_one_level_correct_over_all_risk_targets": 6369,
+        "within_one_level_accuracy_over_all_risk_targets": 0.8382469070808107,
+        "nonburnable_and_water_targets": 2954,
+        "exact_nonburnable_or_water_label_correct": 2549,
+        "exact_nonburnable_or_water_label_accuracy": 0.8628977657413677,
+        "denominator_note": "All risk rates use every true risk target, including predictions of water or nonburnable. Those predictions have no ordinal rank and are separately counted as outside the risk classes."
+      },
+      "largest_off_diagonal_counts": [
+        {
+          "true": "very_low",
+          "predicted": "low",
+          "count": 557,
+          "fraction_of_true_class": 0.17064950980392157
+        },
+        {
+          "true": "low",
+          "predicted": "very_low",
+          "count": 477,
+          "fraction_of_true_class": 0.2970112079701121
+        },
+        {
+          "true": "very_low",
+          "predicted": "non-burnable",
+          "count": 302,
+          "fraction_of_true_class": 0.09252450980392157
+        },
+        {
+          "true": "moderate",
+          "predicted": "low",
+          "count": 298,
+          "fraction_of_true_class": 0.23047177107501934
+        },
+        {
+          "true": "high",
+          "predicted": "moderate",
+          "count": 254,
+          "fraction_of_true_class": 0.2687830687830688
+        },
+        {
+          "true": "low",
+          "predicted": "moderate",
+          "count": 249,
+          "fraction_of_true_class": 0.15504358655043587
+        },
+        {
+          "true": "non-burnable",
+          "predicted": "very_low",
+          "count": 227,
+          "fraction_of_true_class": 0.08426132145508537
+        },
+        {
+          "true": "moderate",
+          "predicted": "high",
+          "count": 194,
+          "fraction_of_true_class": 0.1500386697602475
+        },
+        {
+          "true": "moderate",
+          "predicted": "very_low",
+          "count": 160,
+          "fraction_of_true_class": 0.12374323279195669
+        },
+        {
+          "true": "very_high",
+          "predicted": "high",
+          "count": 140,
+          "fraction_of_true_class": 0.2857142857142857
+        }
+      ]
+    }
+  }
+}
