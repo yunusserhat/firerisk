@@ -117,6 +117,35 @@ The mirror lacks coordinates and scene identifiers, so a random image split
 cannot establish geographic generalization. The model predicts the dataset's
 hazard labels rather than future wildfire occurrence.
 
+## Published checkpoints
+
+The initial [full fine-tuning checkpoint](https://huggingface.co/yunusserhat/firerisk-siglip2-base)
+and [frozen encoder checkpoint](https://huggingface.co/yunusserhat/firerisk-siglip2-base-frozen)
+are available on Hugging Face. Each release includes its configuration,
+preprocessing, class mapping, calibration, validation results and checksums.
+The frozen release stores the trained classifier and loads the pinned
+pretrained encoder separately. Both use this toolkit's inference command.
+
+After installing the toolkit and setting `FIRERISK_HOME`, download a release
+and predict without downloading FireRisk.
+
+```bash
+hf download yunusserhat/firerisk-siglip2-base \
+  --local-dir "$FIRERISK_HOME/releases/siglip2-base"
+firerisk predict --run-dir "$FIRERISK_HOME/releases/siglip2-base" \
+  --image /path/to/aerial_image.png
+```
+
+To prepare a release from your own completed validation run, export an
+inference checkpoint to a separate directory. This command does not upload it.
+
+```bash
+python scripts/export_model.py \
+  --run-dir "$FIRERISK_HOME/runs/siglip2-base-full-seed42" \
+  --output "$FIRERISK_HOME/releases/my-siglip2-model" \
+  --repo-id your-account/your-model
+```
+
 ## Checks and license
 
 ```bash

@@ -31,6 +31,14 @@ PyTorch 2.9.1 CUDA 12.8 stack:
   Single-image CPU prediction also completed.
 - Wheel and source distribution built successfully. Ruff checks and offline
   tests run in GitHub CI without dataset/model downloads.
+- Inference release exports for both completed SigLIP2 recipes retain every
+  source tensor exactly and reproduce the original CLI prediction on a
+  training image. Weights-only checkpoint loading and all release checksums
+  passed. The public Hugging Face files match the local exports; the large
+  checkpoint was verified against its remote LFS SHA-256.
+- Dataset figures sample one training image per class with a declared seed
+  and verify the split hash, class counts and cached pixel fingerprints.
+  Headers of all 70,331 source images were confirmed as 320 by 320 RGB PNGs.
 
 The initial full-data SigLIP2 full and frozen-encoder experiments are separate
 from smoke validation. They retain their actual results and status under
